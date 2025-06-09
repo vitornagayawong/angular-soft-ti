@@ -1,0 +1,16 @@
+<h2>Gerenciar Contatos</h2>
+
+<form [formGroup]="formContato" (ngSubmit)="salvar()">
+  <input type="text" formControlName="title" placeholder="Título" />
+  <input type="text" formControlName="description" placeholder="Descrição" />
+  <button type="submit">{{ editandoId ? 'Atualizar' : 'Salvar' }}</button>
+  <button type="button" (click)="cancelarEdicao()" *ngIf="editandoId">Cancelar</button>
+</form>
+
+<ul>
+  <li *ngFor="let contato of contatos">
+    <strong>{{ contato.title }}</strong> - {{ contato.description }}
+    <button (click)="editar(contato)">Editar</button>
+    <button (click)="deletar(contato.id)">Excluir</button>
+  </li>
+</ul>
