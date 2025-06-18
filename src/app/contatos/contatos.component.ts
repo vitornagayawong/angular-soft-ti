@@ -13,6 +13,7 @@ export class ContatosComponent {
   formContato: FormGroup;
   contatos: any[] = [];
   editandoId: string | null = null;
+  urlDefault: string = 'http://localhost:3333/contatos';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.formContato = this.fb.group({
@@ -24,7 +25,7 @@ export class ContatosComponent {
   }
 
   carregarContatos() {
-    this.http.get<any[]>('http://localhost:3333/contatos').subscribe(data => {
+    this.http.get<any[]>(this.urlDefault).subscribe(data => {
       this.contatos = data;
     });
   }
@@ -33,13 +34,13 @@ export class ContatosComponent {
     const contato = this.formContato.value;
 
     if (this.editandoId) {
-      this.http.put(`http://localhost:3333/contatos/${this.editandoId}`, contato).subscribe(() => {
+      this.http.put(this.urlDefault + '/' + this.editandoId, contato).subscribe(() => {
         this.editandoId = null;
         this.formContato.reset();
         this.carregarContatos();
       });
     } else {
-      this.http.post('http://localhost:3333/contatos', contato).subscribe(() => {
+      this.http.post(this.urlDefault, contato).subscribe(() => {
         this.formContato.reset();
         this.carregarContatos();
       });
@@ -55,7 +56,7 @@ export class ContatosComponent {
   }
 
   deletar(id: string) {
-    this.http.delete(`http://localhost:3333/contatos/${id}`).subscribe(() => {
+    this.http.delete(this.urlDefault + '/' + id).subscribe(() => {
       this.carregarContatos();
     });
   }

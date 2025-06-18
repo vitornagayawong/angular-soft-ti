@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface Contato {
   id?: string;
   title: string;
-  description: string;
+  description: string;  
 }
 
 @Injectable({
